@@ -51,7 +51,7 @@
             body::-webkit-scrollbar {
               display: none !important;
             }
-            
+
             .SPPageChrome,
             .SPPageChrome-app,
             .SPPageChrome-app > div,
@@ -59,11 +59,7 @@
             div:has(> .mainContent) {
               display: block !important;
             }
-        
-            .SPPageChrome-app > .ms-Callout-container {
-              display: none !important;
-            }
-        
+          
             html,
             body,
             .SPPageChrome,
@@ -71,32 +67,45 @@
             .SPPageChrome-app {
               height: auto !important;
             }
-        
-            [data-automation-id='contentScrollRegion'] {
-              height: auto  !important;
-              overflow-x: visible  !important;
+
+            @media (max-width: 639px) {
+              #go-springboard {
+                display: none !important;
+              }
             }
-        
-            .spAppAndPropertyPanelContainer:has(#go-springboard) {
-              padding-inline-end: 72px !important;
-              transition: none !important;
-            }
+
+            @media (min-width: 640px) {
+              .SPPageChrome-app > .ms-Callout-container {
+                display: none !important;
+              }
+          
+              [data-automation-id='contentScrollRegion'] {
+                height: auto  !important;
+                overflow-x: visible  !important;
+              }
+
+              .spAppAndPropertyPanelContainer:has(#go-springboard) {
+                padding-inline-end: 72px !important;
+                transition: none !important;
+              }
+            }            
           `;
-            document.head.appendChild(style);
         
-            for (const webparts of document.querySelectorAll('[data-viewport-id]')) {
-              await webparts.scrollIntoViewIfNeeded();
-        
-              await new Promise((resolve) => setTimeout(resolve, 100));
-            }
-        
-            window.scrollTo(0, 0);
-        
-            const height = document.querySelector('.spAppAndPropertyPanelContainer').getBoundingClientRect().height;
-        
-            const springboard = document.querySelector('#go-springboard');
-            springboard.style.height = `${height}px`;
-        
+          document.head.appendChild(style);
+      
+          for (const webparts of document.querySelectorAll('[data-viewport-id]')) {
+            await webparts.scrollIntoViewIfNeeded();
+      
+            await new Promise((resolve) => setTimeout(resolve, 100));
+          }
+      
+          window.scrollTo(0, 0);
+      
+          const height = document.querySelector('.spAppAndPropertyPanelContainer').getBoundingClientRect().height;
+      
+          const springboard = document.querySelector('#go-springboard');
+          springboard.style.height = `${height}px`;
+      
           const images = document.querySelectorAll('img[srcset], img[loading]');
           for (let image of images) {
             image.loading = 'eager';
