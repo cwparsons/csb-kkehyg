@@ -67,6 +67,10 @@
             .SPPageChrome-app {
               height: auto !important;
             }
+            
+            [data-sp-feature-tag='Site header host'] + div {
+              flex-basis: auto;
+            }
 
             @media (max-width: 639px) {
               #go-springboard {
@@ -80,13 +84,22 @@
               }
           
               [data-automation-id='contentScrollRegion'] {
-                height: auto  !important;
-                overflow-x: visible  !important;
+                height: auto !important;
+                overflow-x: visible !important;
+                overflow-y: visible !important;
               }
 
               .spAppAndPropertyPanelContainer:has(#go-springboard) {
                 padding-inline-end: 72px !important;
                 transition: none !important;
+              }
+
+              #go-springboard [class*='tab-list'] {
+                place-content: flex-start;
+              }
+
+              #go-springboard [class*='tab-list'] > * {
+                flex-grow: 0;
               }
             }            
           `;
@@ -104,7 +117,10 @@
           const height = document.querySelector('.spAppAndPropertyPanelContainer').getBoundingClientRect().height;
       
           const springboard = document.querySelector('#go-springboard');
-          springboard.style.height = `${height}px`;
+          if (springboard) springboard.style.height = `${height}px`;
+
+          const appbar = document.querySelector('#sp-appBar');
+          if (appbar) appbar.style.height = `${height}px`;
       
           const images = document.querySelectorAll('img[srcset], img[loading]');
           for (let image of images) {
@@ -116,9 +132,7 @@
             
             image.removeAttribute('srcset');
           }
-
-          const v = 'v2';
-        })();"
+        })('v3');"
         style="
           border: 1px solid grey;
           border-radius: 4px;
@@ -127,7 +141,7 @@
           padding: 0.5rem;
           text-decoration: none;
         "
-        >📸 SharePoint screenshot (v2)</a>
+        >📸 SharePoint screenshot (v3)</a>
     </p>
 
     <h2>Steps</h2>
